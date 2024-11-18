@@ -48,6 +48,10 @@ const theme = await getThemeDetail(id);
 	</section>
 
 	<form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSejtAdPKjJIln8at7tkVMeqf3Zns7_mlJjt6A-8M4bTadmnJA/formResponse" method="POST" id="application-form">
+		<h2>
+			<span>応募フォーム</span>
+		</h2>
+
 		<input type="hidden" name="entry.514395888" value={theme.entryId}>
 
 		<div class="form-group">
@@ -140,7 +144,6 @@ const theme = await getThemeDetail(id);
 			background: #7C20AD;
 			z-index: 1;
 		}
-
 	}
 
 	.theme {
@@ -218,6 +221,7 @@ const theme = await getThemeDetail(id);
 			border: 2px solid #3A3A3A;
 			border-radius: 4px;
 			color: #FFF;
+			font-family: 'Noto Sans JP Variable', sans-serif;
 			text-align: center;
 			font-weight: 500;
 			background:#4462F5;

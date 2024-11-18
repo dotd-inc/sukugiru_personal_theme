@@ -1,4 +1,6 @@
 ---
+import '@fontsource-variable/noto-sans-jp';
+
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 import BaseHead from '../components/BaseHead.astro';
@@ -7,19 +9,14 @@ import Footer from '../components/Footer.astro';
 
 ---
 
-<html lang="en">
+<html lang="ja">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			main {
-				max-width: 100%;
-				margin: 0;
-			}
-
-      article {
         margin: 0 auto;
         max-width: 900px;
-      }
+			}
 		</style>
 	</head>
 
