@@ -7,6 +7,7 @@ on:
     branches: [ main ]
   # このワークフローを GitHub の Actions タブから手動で実行できるようにします。
   workflow_dispatch:
+
   repository_dispatch:
     types: [microcms]
 

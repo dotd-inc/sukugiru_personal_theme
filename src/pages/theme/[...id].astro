@@ -18,6 +18,15 @@ const theme = await getThemeDetail(id);
 ---
 
 <Layout>
+	<script type="text/javascript">
+    let submitted = false;
+	</script>
+	<iframe
+			name="hidden_iframe"
+			id="hidden_iframe"
+			style="display: none"
+			onload="if(submitted){window.location='https://dotd-inc.github.io/sukugiru_personal_theme/thanks';}"
+	></iframe>
 	<div class="lead-text">
 		<p>
 			アンケートの回答から、あなたの嗜好に併せたテーマをつくりました。
@@ -47,7 +56,14 @@ const theme = await getThemeDetail(id);
 		<div class="theme" set:html={theme.theme3}></div>
 	</section>
 
-	<form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSejtAdPKjJIln8at7tkVMeqf3Zns7_mlJjt6A-8M4bTadmnJA/formResponse" method="POST" id="application-form" class="form-section">
+	<form
+		action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSejtAdPKjJIln8at7tkVMeqf3Zns7_mlJjt6A-8M4bTadmnJA/formResponse"
+		method="POST"
+		target="hidden_iframe"
+    onsubmit="submitted=true;"
+		id="application-form"
+		class="form-section"
+	>
 		<h2>
 			<span>応募フォーム</span>
 		</h2>
