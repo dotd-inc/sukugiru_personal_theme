@@ -1,0 +1,226 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import { getThemes } from '../../infrastructure/microcms';
+import { getThemeDetail } from '../../infrastructure/microcms';
+
+export async function getStaticPaths() {
+	const themes = await getThemes({ fields: 'id' });
+	const paths = themes.contents.map((theme) => ({
+		params: { id: theme.id },
+	}));
+
+	return paths
+}
+
+
+const { id } = Astro.params
+const theme = await getThemeDetail(id);
+---
+
+<Layout>
+	<div class="lead-text">
+		<p>
+			アンケートの回答から、あなたの嗜好に併せたテーマをつくりました。
+			3つのテーマから、1つ選択してプロトタイプを作成してください。
+		</p>
+		<p>
+			2025年1月20(月) 23:59までに、
+			<a href="#application-form">こちらのフォーム</a>に必要事項を入力して応募してください
+		</p>
+	</div>
+	<section class="theme-section">
+		<h2>
+			<span>テーマ候補1</span>
+		</h2>
+		<div class="theme" set:html={theme.theme1}></div>
+	</section>
+	<section class="theme-section">
+		<h2>
+			<span>テーマ候補2</span>
+		</h2>
+		<div class="theme" set:html={theme.theme2}></div>
+	</section>
+	<section class="theme-section">
+		<h2>
+			<span>テーマ候補3</span>
+		</h2>
+		<div class="theme" set:html={theme.theme3}></div>
+	</section>
+
+	<form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSejtAdPKjJIln8at7tkVMeqf3Zns7_mlJjt6A-8M4bTadmnJA/formResponse" method="POST" id="application-form">
+		<input type="hidden" name="entry.514395888" value={theme.entryId}>
+
+		<div class="form-group">
+			<label for="form-name">お名前</label>
+			<input type="text" required name="entry.139146005" id="form-name">
+		</div>
+
+		<div class="form-group">
+			<label for="form-mail">メールアドレス</label>
+			<input type="email" required name="entry.1413532972" id="form-mail">
+		</div>
+
+		<div class="form-group">
+			<label for="form-product-name">作品タイトル</label>
+			<input type="text" required name="entry.793637870" id="form-product-name">
+		</div>
+
+		<div class="form-group">
+			<label for="form-product-url">作品URL</label>
+			<div>
+				<p>以下いずれかの形式で応募してください</p>
+				<ul>
+					<li>Figma, ProtoPie等のプロトタイピングツールの共有リンク</li>
+					<li>実際に公開したWebサイト・サービスのURL</li>
+					<li>実際に公開したスマホアプリのストアURL</li>
+				</ul>
+			</div>
+			<input type="url" required name="entry.1905579624" id="form-product-url">
+		</div>
+
+		<div class="form-group">
+			<label for="form-product-description">作品の概要</label>
+			<div>
+				<p>作品の概要を説明してください。資料のURLを貼り付ける形でも大丈夫です。</p>
+				<p>フォーマットは自由ですが、制作のプロセスについても説明されていると良いです。</p>
+				<ul>
+					<li>与えられたテーマをどう解釈したのか</li>
+					<li>誰の、何の課題を解決するのか</li>
+					<li>最終アウトプットに至るまでの試行錯誤の過程</li>
+				</ul>
+			</div>
+			<textarea name="entry.438280160" required rows="5" id="form-product-description"　></textarea>
+		</div>
+
+		<div class="btn-group">
+			<button type="submit">応募する</button>
+		</div>
+	</form>
+</Layout>
+
+<style>
+	.lead-text {
+		margin: 0 0 40px;
+		font-size: 1rem;
+		font-weight: bold;
+
+		> p {
+			margin-bottom: 1.7em;
+		}
+	}
+
+	.theme-section {
+		margin: 0 0 64px;
+		padding: 40px;
+		border: 3px solid #3A3A3A;
+		border-radius: 18px;
+		background: #FFF;
+	}
+
+	.theme-section h2 {
+		position: relative;
+		width: 220px;
+		height: 53px;
+		margin: 10px 0 32px 10px;
+		border: 2px solid #3A3A3A;
+
+		& > span {
+			display: block;
+			width: 223px;
+			height: 56px;
+			position: absolute;
+			top: -10px;
+			left: -10px;
+			border: 2px solid #3A3A3A;
+			color: #fff;
+			font-size: 1.5rem;
+			font-weight: 700;
+			line-height: 56px;
+			text-align: center;
+			background: #7C20AD;
+			z-index: 1;
+		}
+
+	}
+
+	.theme {
+
+		> h3 {
+			margin: 0 0 0.5rem;
+			font-size: 1.25rem;
+			font-weight: 700;
+		}
+
+		> p,
+		> ul {
+			margin: 0;
+			font-size: 1rem;
+			font-weight: 500;
+
+			& + h3 {
+				margin-top: 1.7rem;
+			}
+		}
+
+		> ul {
+			list-style: none;
+
+			> li {
+				position: relative;
+				padding: 0 0 0 1rem;
+				&::before {
+					content: '・';
+					position: absolute;
+					left: 0;
+				}
+			}
+		}
+	}
+
+	form {
+		display: flex;
+		gap: 16px;
+		flex-direction: column;
+		max-width: 720px;
+		margin: 0 auto;
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		font-size: 1rem;
+
+		> label {
+			font-weight: 700;
+		}
+
+		> input, > textarea {
+			padding: 8px 16px;
+			border: 2px solid #3A3A3A;
+			border-radius: 4px;
+			font-weight: 500;
+		}
+
+		> textarea {
+			resize: none;
+		}
+	}
+
+	.btn-group {
+		display: flex;
+		justify-content: center;
+		padding: 16px 0 0;
+
+		> button[type='submit'] {
+			min-width: 200px;
+			padding: 8px 16px;
+			border: 2px solid #3A3A3A;
+			border-radius: 4px;
+			color: #FFF;
+			text-align: center;
+			font-weight: 500;
+			background:#4462F5;
+		}
+	}
+</style>
