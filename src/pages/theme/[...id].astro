@@ -29,7 +29,7 @@ const theme = await getThemeDetail(id);
 	></iframe>
 	<div class="lead-text">
 		<p>
-			アンケートの回答から、あなたの嗜好に併せたテーマをつくりました。
+			アンケートの回答から、あなたの嗜好に併せたテーマをつくりました。<br>
 			3つのテーマから、1つ選択してプロトタイプを作成してください。
 		</p>
 		<p>
@@ -69,6 +69,7 @@ const theme = await getThemeDetail(id);
 		</h2>
 
 		<input type="hidden" name="entry.514395888" value={theme.entryId}>
+		<input type="hidden" name="entry.386337815" value={theme.id}>
 
 		<div class="form-group">
 			<label for="form-name">お名前</label>
