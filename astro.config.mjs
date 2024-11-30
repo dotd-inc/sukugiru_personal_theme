@@ -6,4 +6,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
 	site: 'https://dotd-inc.github.io',
 	base: '/sukugiru_personal_theme',
+	redirects: {
+		"/sukugiru_personal_theme/theme" : "/sukugiru_personal_theme",
+	},
 });

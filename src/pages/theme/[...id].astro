@@ -1,17 +1,16 @@
 ---
 import Layout from "../../layouts/Layout.astro"
-import { getThemes } from '../../infrastructure/microcms';
+import { getAllThemes } from '../../infrastructure/microcms';
 import { getThemeDetail } from '../../infrastructure/microcms';
 
 export async function getStaticPaths() {
-	const themes = await getThemes({ fields: 'id' });
-	const paths = themes.contents.map((theme) => ({
+	const themes = await getAllThemes({ fields: 'id' });
+	const paths = themes.map((theme) => ({
 		params: { id: theme.id },
 	}));
 
 	return paths
 }
-
 
 const { id } = Astro.params
 const theme = await getThemeDetail(id);
